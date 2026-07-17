@@ -1,0 +1,12 @@
+project: savantenvs/libcbor
+# In-process libFuzzer harness over libcbor's decoder: it reads a raw CBOR byte stream via
+# cbor_load() and, on a successful decode, exercises cbor_describe / cbor_serialize_alloc / cbor_copy
+# on the resulting item tree. Adapted verbatim from upstream oss-fuzz/cbor_load_fuzzer.cc.
+target: cbor_load_fuzzer
+
+cmds:
+  - cmd: /mayhem/cbor_load_fuzzer
+    libfuzzer: true
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/cbor_load_fuzzer/testsuite
